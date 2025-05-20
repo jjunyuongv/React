@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      const square = function(x) {
+        return x * x;
+      }
+      console.log(square(5));
+      const foo = square;
+      console.log(foo(6));
+
+      function formalGreeting() {
+        console.log('How Are you?');
+      }
+
+      function casualGreeting() {
+        console.log("What's up"?);
+      }
+
+      function greet(type, greetFormal, greetCausal) {
+        if (type == 'formal') {
+          greetFormal();
+        }else if (type == 'causal') {
+          greetCausal();
+        }
+      }
+      greet('causal', formalGreeting, casualGreeting);
+    </script>
+  </body>
+</html>

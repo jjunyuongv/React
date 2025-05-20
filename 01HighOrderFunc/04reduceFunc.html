@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+  </head>
+    <script>
+      (function reduceTest1() {
+          console.error("reduceTest1() called..기본사용법");
+          var oldArray = [0,1,2,3,4];
+          oldArray.reduce(function (previousVal, currentVal, index, array) {
+              console.log(previousVal, currentVal, index);
+          });
+      })();
+
+      function reduceTest2() {
+          console.error("reduceTest2() called..return값 사용하기");
+          var oldArray = [0,1,2,3,4];
+          var sum = oldArray.reduce(function (previousVal, currentVal) {
+              console.log(previousVal, currentVal);
+              return previousVal + currentVal;
+          });
+          console.log(sum);
+      }
+
+      function reduceTest3() {
+          console.error("reduceTest3() called..초기값 사용하기기");
+          var oldArray = [0,1,2,3,4];
+          var sum = oldArray.reduce(function (previousVal, currentVal) {
+              console.log(previousVal, currentVal);
+              return previousVal + currentVal;
+          }, 2);
+          console.log(sum);
+      }
+
+      function reduceTest4() {
+          console.error("reduceTest4() called.. 배열에서 중복값을 제거하는 함수 구현");
+          var oldArray = [0,1,2,3,3,3,4,5,5,6,6];
+          var newArray = oldArray.reduce(
+              function (previousVal, currentVal) {
+                  if (previousVal.indexOf(currentVal)<0) {
+                      previousVal.push(currentVal);
+                  }
+                  return previousVal;
+              }, []);
+              console.log(newArray);
+      }
+    </script>
+
+  <body>
+      <h2>고차함수 - reduce()</h2>
+      <div>
+          <input type="button" onclick="reduceTest1();" value="reduce1">
+          <input type="button" onclick="reduceTest2();" value="reduce2">
+          <input type="button" onclick="reduceTest3();" value="reduce3">
+          <input type="button" onclick="reduceTest4();" value="reduce4">
+
+      </div>
+  </body>
+</html>

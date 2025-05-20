@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+  </head>
+  <script>
+    function forEachTest1() {
+      console.error("forEachTest1() called..기본사용법");
+      var oldArray = [1,2,3,4,5];
+      oldArray.forEach(function (currentVal, index, array) {
+          console.log('현재값:' + currentVal, '인덱스'+index, '배열:'+array);
+      });
+    };
+
+    function forEachTest2() {
+      console.error("forEachTest2() called..배열 요소의 합계");
+      var oldArray = [1,2,3,4,5];
+      var sum = 0;
+      function getSum(currentVal) {
+        sum += currentVal;
+      }
+      oldArray.forEach(getSum);
+      console.log(sum);
+    };
+
+    function forEachTest3() {
+      console.error("forEachTest3() called..매개변수 사용하기");
+      var oldArray = [1,2,3,4,5,6,7,8,9,10];
+      var sum = 0;
+      var myArgs = {min:3, max:7};
+      function getSum(currentVal) {
+        if (currentVal>=this.min && currentVal<=this.max) {
+          
+        }
+      }
+
+    }
+  </script>
+  <body>
+    
+  </body>
+</html>
