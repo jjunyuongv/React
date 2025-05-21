@@ -10,26 +10,25 @@
       const square = function(x) {
         return x * x;
       }
-      console.log(square(5));
-      const foo = square;
-      console.log(foo(6));
+      console.log(square(5)); //⇒ 25가 반환됨
+      const foo = square; //⇒ 주소값을 통해 변수에 함수 할당
+      console.log(foo(6));  //⇒ 36이 반환됨   
 
-      function formalGreeting() {
+      function formalGreeting()
+      {
         console.log('How Are you?');
       }
-
       function casualGreeting() {
-        console.log("What's up"?);
+        console.log("What's up?");
       }
-
-      function greet(type, greetFormal, greetCausal) {
+      function greet(type, greetFormal, greetCausal) {  //⇒ 인수로 전달된 함수를 매개변수로 받음
         if (type == 'formal') {
           greetFormal();
-        }else if (type == 'causal') {
+        } else if (type == 'causal') {
           greetCausal();
         }
       }
-      greet('causal', formalGreeting, casualGreeting);
+      greet('causal', formalGreeting, casualGreeting);   // ⇒ 2개의 함수를 인수로 전달
     </script>
   </body>
 </html>
