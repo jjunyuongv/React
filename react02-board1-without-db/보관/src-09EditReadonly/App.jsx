@@ -35,6 +35,7 @@ function App() {
     {no:1, title:'오늘은 React공부하는날', writer:'홍길동', date:'2025-01-01', contents:'React를 뽀개봅시다.'},
     {no:2, title:'어제는 Javascript공부해씸', writer:'유겸이', date:'2025-05-20', contents:'Javascript는 할게 많아요.'},
     {no:3, title:'내일은 Project해야징', writer:'개똥이', date:'2025-07-21', contents:'Project는 뭘 만들어볼까?.'},
+    {no:4, title:'추가 내일은 Project해야징', writer:'손오공', date:'2025-07-21', contents:'Project는 뭘 만들어볼까?.'},
   ]);
 
   const [mode, setMode] = useState('list');
@@ -75,7 +76,7 @@ function App() {
     navComp = <NavWrite onChangeMode={()=>{
       setMode('list');
     }}></NavWrite>
-
+    
     articleComp = <ArticleWrite writeAction={(t, w, c)=>{
       console.log("App.js", t, w, c);
 
@@ -134,23 +135,8 @@ function App() {
         selectRow = boardData[i];
       }
     }
-    articleComp = <ArticleEdit selectRow={selectRow} editAction = {(t, w, c)=>{
-        let editBoardData = {no:no, title:t, writer:w, contents:c, date:selectRow.date};
-        console.log('수정내용', editBoardData);
-
-        let copyBoardData = [...boardData];
-        for (let i = 0 ; i < copyBoardData.length ; i++) {
-          if (copyBoardData[i].no===no) {
-            copyBoardData[i] = editBoardData;
-            break;
-          }
-        }
-        setBoardData(copyBoardData);
-        setMode('view');
-      }}
-      ></ArticleEdit>
+    articleComp = <ArticleEdit selectRow={selectRow}></ArticleEdit>
   }
-
   else {
     navComp = <ReadyComp></ReadyComp>;
     articleComp = '';
