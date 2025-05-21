@@ -29,18 +29,16 @@ function Header(props) {
 }
 
 function App() {
-  const [boardData, setBoardData] = useState ([
+  const boardData = [
     {no:1, title:'오늘은 React공부하는날', writer:'홍길동', date:'2025-01-01', contents:'React를 뽀개봅시다.'},
     {no:2, title:'어제는 Javascript공부해씸', writer:'유겸이', date:'2025-05-20', contents:'Javascript는 할게 많아요.'},
     {no:3, title:'내일은 Project해야징', writer:'개똥이', date:'2025-07-21', contents:'Project는 뭘 만들어볼까?.'},
     {no:4, title:'추가 내일은 Project해야징', writer:'손오공', date:'2025-07-21', contents:'Project는 뭘 만들어볼까?.'},
-  ]);
+  ];
 
   const [mode, setMode] = useState('list');
 
   const [no, setNo ] = useState(null);
-
-  const [nextNo, setNextNo] = useState(4);
 
   let articleComp, navComp, titleVar, selectRow ;
   if(mode==='list') {
@@ -74,46 +72,7 @@ function App() {
     navComp = <NavWrite onChangeMode={()=>{
       setMode('list');
     }}></NavWrite>
-    articleComp = <ArticleWrite writeAction={(t, w, c)=>{
-      console.log("App.js", t, w, c);
-
-      let dateObj = new Date();
-      var year = dateObj.getFullYear();
-      var month = ("0" + (1 + dateObj.getMonth())).slice(-2);
-      var day = ("0" + dateObj.getDate()).slice(-2);
-      let nowDate = year + "-" + month + "-" + day;
-
-      let addBoardData = {no:nextNo, title:t, writer:w, contents:c, date:nowDate};
-
-      let copyBoardData = [...boardData];
-      copyBoardData.push(addBoardData);
-      setBoardData(copyBoardData);
-      
-      // boardData.push(addBoardData);
-      // console.log(boardData);
-      // setBoardData(boardData);
-
-      setNextNo(nextNo+1);
-      setMode('list');
-    }}></ArticleWrite>
-  }
-  else if(mode==='delete') {
-    let newBoarData = [];
-    for (let i=0 ; i < boardData.length ; i++) {
-      if(no !== boardData[i].no) {
-        newBoarData.push(boardData[i]);
-      }
-    }
-    setBoardData(newBoarData);
-
-    // for(let i=0; i<boardData.length; i++) {
-    //   if(no === boardData[i].no) {
-    //     boardData.splice(i, 1);
-    //   }
-    // }
-    // setBoardData(boardData);
-
-    setMode('list');
+    articleComp = <ArticleWrite></ArticleWrite>
   }
   else {
     navComp = <ReadyComp></ReadyComp>;

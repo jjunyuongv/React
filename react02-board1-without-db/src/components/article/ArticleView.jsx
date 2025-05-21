@@ -1,6 +1,7 @@
 import React from "react";
 
 function ArticleView(props) {
+  console.log("선택한게시물:", props.selectRow);
   return(
     <article>
       <table id="boardTable">
@@ -10,19 +11,19 @@ function ArticleView(props) {
           <tbody>
             <tr>
               <td>작성자</td>
-              <td>성유겸</td>
+              <td>{props.selectRow.writer}</td>
             </tr>
             <tr>
               <td>제목</td>
-              <td>오늘은 React 공부하는 날</td>
+              <td>{props.selectRow.title}</td>
             </tr>
             <tr>
               <td>날짜</td>
-              <td>2025-05-20</td>
+              <td>{props.selectRow.date}</td>
             </tr>
             <tr>
               <td>내용</td>
-              <td>열심히 해봅시당<br/>열공 합시다.</td>
+              <td>{props.selectRow.contents}</td>
             </tr>
           </tbody>
         </table>

@@ -97,24 +97,6 @@ function App() {
       setMode('list');
     }}></ArticleWrite>
   }
-  else if(mode==='delete') {
-    let newBoarData = [];
-    for (let i=0 ; i < boardData.length ; i++) {
-      if(no !== boardData[i].no) {
-        newBoarData.push(boardData[i]);
-      }
-    }
-    setBoardData(newBoarData);
-
-    // for(let i=0; i<boardData.length; i++) {
-    //   if(no === boardData[i].no) {
-    //     boardData.splice(i, 1);
-    //   }
-    // }
-    // setBoardData(boardData);
-
-    setMode('list');
-  }
   else {
     navComp = <ReadyComp></ReadyComp>;
     articleComp = '';
