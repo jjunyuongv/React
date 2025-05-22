@@ -1,7 +1,7 @@
-import React from "react";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
 function Write(props) {
+  //State와 관련 데이터와 함수를 모두 받아온다. 
   const boardData = props.boardData;
   const setBoardData = props.setBoardData;
   const nextNo = props.nextNo;
@@ -9,30 +9,39 @@ function Write(props) {
   const navigate = props.navigate;
   const nowDate = props.nowDate;
 
-  return (<>
+  return(<>
     <header>
-        <h2>게시판-작성</h2>
-      </header> 
-      <nav>
-        {/* <a href="/list">목록</a> */}
-        <Link to="/list">목록</Link>
-      </nav>
-      <article>
-      <form onSubmit={(event)=>{
-        event.preventDefault();
+      <h2>게시판-작성</h2>
+    </header> 
+    <nav>
+      <Link to="/list">목록</Link>
+    </nav>
+    <article>
+      
+      <form onSubmit={
+        (event) =>{
+          event.preventDefault();
 
-        let w = event.target.writer.value;
-        let t = event.target.title.value;
-        let c = event.target.contents.value;
+          //Event객체를 통해 입력값을 얻어옴 
+          let w = event.target.writer.value;
+          let t = event.target.title.value;
+          let c = event.target.contents.value;
 
-        let addBoardData = {no:nextNo, writer:w, title:t, contents:c, date:nowDate()};
+          //추가할 객체 생성 
+          let addBoardData = {no:nextNo, writer:w, title:t, contents:c, date:nowDate()};
 
-        let copyBoardData = [...boardData];
-        copyBoardData.push(addBoardData);
-        setBoardData(copyBoardData);
-        setNextNo(nextNo+1);
-        navigate("/list");
-      }}>
+          //복사본을 생성한 후 데이터를 추가한다. 
+          let copyBoardData = [...boardData];
+          copyBoardData.push(addBoardData);
+
+          //State를 변경한다. 
+          setBoardData(copyBoardData);
+          //시퀀스용 번호도 1 증가시킨다. 
+          setNextNo(nextNo+1);
+          //완료되면 목록으로 이동한다. 
+          navigate("/list");
+        }
+      }>
         <table id="boardTable">
           <tbody>
             <tr>
@@ -51,7 +60,7 @@ function Write(props) {
         </table>
         <input type="submit" value="전송" />
       </form>
-      </article>
+    </article>
   </>);
 }
 
