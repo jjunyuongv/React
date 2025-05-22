@@ -65,28 +65,15 @@ function View(props) {
 
   return (<>
     <header>
-      <h2>게시판-읽기</h2>
-    </header> 
+        <h2>게시판-읽기</h2>
+      </header> 
       <nav>
         {/* <a href="/list">목록</a>&nbsp;
         <a href="/edit">수정</a>&nbsp;
         <a href="/delete">삭제</a> */}
         <Link to="/list">목록</Link>&nbsp;
-        <Link to={"/edit/"+params.no}>수정</Link>&nbsp;
-        <a href="/delete" onClick={(e)=>{
-          e.preventDefault();
-          if (window.confirm('삭제하시겠습니까?')) {
-            let newBoardData = props.boardData.filter((curr)=>{
-              if(Number(params.no)!== curr.no) {
-                return curr;
-              }
-            });
-            console.log("삭제결과", newBoardData);
-            props.setBoardData(newBoardData);
-            props.navigate("/list");
-          }
-        }}>삭제</a>
-        
+        <Link to="/edit">수정</Link>&nbsp;
+        <Link to="/delete">삭제</Link>
       </nav>
       <article>
         <table id="boardTable">

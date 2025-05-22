@@ -7,7 +7,6 @@ import List from './components/board/List';
 import NotFound from './components/common/NotFound';
 import Write from './components/board/Write';
 import View from './components/board/View';
-import Edit from './components/board/Edit';
 
 const nowDate = () => {
 
@@ -34,21 +33,14 @@ function App() {
         <Route path='/' element={<List boardData={boardData} />} />
         <Route path='/list' element={<List boardData={boardData} />} />
         <Route path='/view'>
-          <Route path=':no' element={<View boardData={boardData} setBoardData={setBoardData} navigate={navigate} />} />  
+          <Route path=':no' element={<View boardData={boardData} />} />  
         </Route>
-
         <Route path='/write' element={<Write
           boardData={boardData} setBoardData={setBoardData}
           nextNo={nextNo} setNextNo={setNextNo}
           navigate={navigate} nowDate={nowDate}
         />} />
-        <Route path='/edit'>
-          <Route path=':no' element={<Edit
-            boardData={boardData} setBoardData={setBoardData}
-            navigate={navigate} nowDate={nowDate} />}
-          />
-        </Route> 
-        <Route path='*' element={<NotFound />} />    
+        <Route path='*' element={<NotFound />} />
       </Routes>
     </div>
   );
