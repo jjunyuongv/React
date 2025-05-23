@@ -1,2 +1,3 @@
 C:\02Workspaces\K00React> rmdir /s node_modules
 C:\02Workspaces\K00React> del package-lock.json
+-npm install-
