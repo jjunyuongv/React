@@ -42,7 +42,6 @@ function App() {
     setMyData(newMyData);
   }
 
-
   return (
     <div className="App">
       <Board />
