@@ -1,37 +1,66 @@
-import { useState } from 'react';
-import './App.css'
+import { useCallback } from 'react';
+import './App.css';
+import { useState, useEffect } from 'react';
 
-const longTimeCalculate = (number) => {
-  console.log('시간이 많이 걸리는 계산');
-  for(let i=0 ; i<1234567890 ; i++) {}
-  return number + 10000;
+//Box컴포넌트 : Props를 통해 <div>의 스타일을 전달받음 
+const Box = ({ createBoxStyle }) => {
+  //State : 초기값으로 빈 객체를 설정 
+  const [style, setStyle] = useState({});
+  
+  /**  
+  Props를 통해 전달받은 createBoxStyle이 변경될때마다 호출되도록 정의함. 
+   */
+  useEffect(() => {
+    console.log('박스 키우기');
+    //호출될때마다 State를 변경한다. 
+    setStyle(createBoxStyle());
+  }, [createBoxStyle]);
+  
+  //<div> 박스를 렌더링한다. 
+  return <div style={style}></div>
 }
-
-const simpleCalculate  = (number) => {
-  console.log('금방 끝나는 계산');
-  return number + 1;
-}
-
 
 function App() {
-  const [longTimeNum, setLongTimeNum] = useState(1);
-  const [simpleNumber, setSimpleNumber] = useState(1);
+  const [size, setSize] = useState(100);
+  const [isDark, setIsDark] = useState(false);
 
-  const longTimeSum = longTimeCalculate(longTimeNum);
-  const simpleSum = simpleCalculate(simpleNumber);
+  /**
+  Step1 : App컴포넌트가 렌더링될때마다 새로운 참조값이 부여된다. 따라서
+    테마변경을 눌러도 이와 상관없는 '박스키우기'가 출력된다. 
+   */
+  // const createBoxStyle = () => {
+  //   return {
+  //     backgroundColor : 'pink',
+  //     width : `${size}px`,
+  //     height : `${size}px`,
+  //   };
+  // }
+  /* Step2 : useCallback 훅을 적용함. size가 변경될때만 새롭게 함수를 
+  메모이제이션 함 */
+  const createBoxStyle = useCallback(()=>{
+    return {
+      backgroundColor : 'pink',
+      width : `${size}px`,
+      height : `${size}px`,
+    };
+  }, [size]);
+
   return (
-    <div className="App">
-      <h1>Long Time 계산기</h1>
-      <input type="number" value={longTimeNum} 
-        onChange={(e)=>setLongTimeNum(parseInt(e.target.value))}/>
-        <span> + 10000 = {longTimeSum}</span>
-
-        <h2>Short Time 계산기</h2>
-        <input type="number" value={simpleNumber}
-          onChange={(e)=>setSimpleNumber(parseInt(e.target.value))} />
-          <span> + 1 = {simpleSum}</span>
+    // <div> 박스의 배경색이 isDark에 따라 black/white로 변경된다. 
+    <div className="App" style={{
+      background : isDark ? 'black' : 'white',
+    }}>
+      <h2>useCallback()</h2>
+      {/* 스핀박스로 변경한 값이 size를 변경하고, 새롭게 렌더링된다.  */}
+      <input type='number' value={size} step={5}
+        onChange={(e) => setSize(e.target.value)}
+      />      
+      {/* 버튼을 누를때마다 black/white가 토글된다.  */}
+      <button onClick={() => setIsDark(!isDark)}>테마변경</button>
+      {/* Style을 반환하는 함수를 Props로 전달한다. */}
+      <Box createBoxStyle={createBoxStyle} />
     </div>
   );
 }
 
-export default App
+export default App;
