@@ -9,7 +9,7 @@ function Edit(props) {
   let  params = useParams();
   console.log("수정idx", params.idx);
 
-  let requestUrl = "http://nakja.co.kr/APIs/php7/boardEditJSON.php";
+  let requestUrl = "http://nakja.co.kr/APIs/php7/boardViewJSON.php";
   let parameter = "apikey=dd62565364be15c7b032ecda1cf21be3&tname=nboard_news&tname=nboard_news&idx="+params.idx;
 
   //수정을 위한 State

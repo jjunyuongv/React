@@ -1,74 +1,91 @@
 import React, { useEffect, useState } from "react";
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 
-function View(props) {
-  console.log(props);
-  //중첩라우터로 처리된 경로에서 idx(일련번호)를 얻어오기 위해 Hook생성 
-  var params = useParams();
-  console.log("idx", params.idx);
+function View() {
+  const params = useParams();
+  const navigate = useNavigate();
 
-  //빈객체를 초기값으로 한 State생성
-  let [boardData, setBoardData] = useState({});
-  //요청URL과 쿼리스트링을 나눠서 정의
-  let requestUrl = "http://nakja.co.kr/APIs/php7/boardViewJSON.php";
-  let parameter = "apikey=dd62565364be15c7b032ecda1cf21be3&tname=nboard_news&tname=nboard_news&idx="+params.idx;
-  
-  //API요청 
-  useEffect(function () {
-    fetch(requestUrl + "?" + parameter)
-      .then((result)=>{
-        return result.json();
-      })
-      .then((json)=>{
+  const [boardData, setBoardData] = useState({});
+  const requestUrl = "http://nakja.co.kr/APIs/php7/boardViewJSON.php";
+  const parameter = `apikey=571ec2efb02807dbf7a55e854c462883&tname=nboard_news&idx=${params.idx}`;
+
+  useEffect(() => {
+    fetch(`${requestUrl}?${parameter}`)
+      .then(result => result.json())
+      .then(json => {
         console.log(json);
-        //콜백 데이터로 State 변경
         setBoardData(json);
       });
+
     return () => {
-      console.log('useEffect실행==> 컴포넌트 언마운트');
-    }
+      console.log('useEffect 실행 ==> 컴포넌트 언마운트');
+    };
   }, []);
 
-  return (<>
-    <header>
-      <h2>게시판-읽기</h2>
-    </header>
-    <nav>
-      <Link to="/list">목록</Link>&nbsp; 
-      <Link to={"/edit/"+params.idx}>수정</Link>&nbsp; 
-      <Link to="/delete/">삭제</Link>&nbsp; 
-    </nav>
-    <article>
-      <table id="boardTable">
-        <colgroup>
-          <col width="20%" />
-          <col width="*" />
-        </colgroup>
-        <tbody>
+  const handleDelete = (e) => {
+    e.preventDefault(); // 링크 클릭 시 페이지 이동 방지
+    if (!window.confirm('정말 삭제하시겠습니까?')) return;
+
+    fetch("http://nakja.co.kr/APIs/php7/boardDeleteJSON.php", {
+      method: 'POST',
+      headers: {
+        'Content-type': 'application/x-www-form-urlencoded;charset=UTF-8',
+      },
+      body: new URLSearchParams({
+        apikey: '571ec2efb02807dbf7a55e854c462883',
+        tname: 'nboard_news',
+        idx: params.idx,
+      }),
+    })
+    .then(result => result.json())
+    .then(json => {
+      console.log(json);
+      if (json.result === 'success') {
+        alert('삭제되었습니다');
+        navigate("/list");
+      } else {
+        alert('삭제에 실패했습니다');
+      }
+    });
+  };
+
+  return (
+    <>
+      <header>
+        <h2>게시판 - 읽기</h2>
+      </header>
+      <nav>
+        <Link to="/list">목록</Link>&nbsp;
+        <Link to={`/edit/${params.idx}`}>수정</Link>&nbsp;
+        <a href="#" onClick={handleDelete}>삭제</a>
+      </nav>
+      <article>
+        <table id="boardTable">
+          <colgroup>
+            <col width="20%" /><col width="*" />
+          </colgroup>
+          <tbody>
             <tr>
-              <th>작성자</th>
+              <td>작성자</td>
               <td>{boardData.name}</td>
             </tr>
             <tr>
-              <th>제목</th>
+              <td>제목</td>
               <td>{boardData.subject}</td>
             </tr>
             <tr>
-              <th>날짜</th>
+              <td>날짜</td>
               <td>{boardData.regdate}</td>
             </tr>
             <tr>
-              <th>내용</th>
-              {/* HTML 태그가 그대로 출력됨. React는 보안적인 문제로 태그는
-              화면에 그대로 출력하는것이 디폴트 설정임. */}
-              {/* <td>{boardData.contents}</td> */}
-              {/* 마크업이 적용된 상태로 출력됨 */}
-              <td dangerouslySetInnerHTML={{__html: boardData.content}}></td>
+              <td>내용</td>
+              <td dangerouslySetInnerHTML={{ __html: boardData.content }}></td>
             </tr>
           </tbody>
-      </table> 
-    </article>
-  </>);
+        </table>
+      </article>
+    </>
+  );
 }
 
 export default View;
