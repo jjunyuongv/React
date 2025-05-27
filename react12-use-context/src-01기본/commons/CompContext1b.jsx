@@ -1,10 +1,12 @@
-import React from "react";
+/**
+ * .CompContext2b 경로에 있는 CompContext2b 컨텍스트 객체를 가져옵니다.
+ */
 import CompContext2b from "./CompContext2b";
 
-const CompContext1b = () => {
-  return (
+const CompContext1b = () =>{
+  return(
     <div>
-      <h4>COntext1b 컴포넌트</h4>
+      <h4>Context1b 콤포넌트</h4>
       <CompContext2b />
     </div>
   );
