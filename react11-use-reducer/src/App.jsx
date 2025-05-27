@@ -4,12 +4,16 @@ import './App.css'
 const Student = ({name, dispatch, id, isHere}) => {
   return (<>
     <div>
-      <span style={{}}
+      <span style={{
+        textDecoration: isHere ? 'line-through' : 'none',
+        color: isHere ? 'gray' : 'black',
+      }}
         onClick={() => {
-          alert('출석처리');
+          dispatch({type:'mark', param:{ id }})
         }}>{name}</span>
       <button onClick={() => {
-        alert('삭제');
+        alert('삭제할까요?');
+        dispatch({type:'delete', param:{ id }})
       }}>삭제</button>
     </div>
   </>);
@@ -29,11 +33,20 @@ const reducer = (state, action) => {
       } }
     case 'delete':
       return {
-        
+        count: state.count -1,
+        students: state.students.filter(
+          student => student.id !== action.param.id
+        )
       }
     case 'mark':
       return {
-        
+        count: state.count,
+        students: state.students.map((student) => {
+          if(student.id === action.param.id) {
+            return {...student, isHere: !student.isHere};
+          }
+          return student;
+        })
       }
     default:
   }
