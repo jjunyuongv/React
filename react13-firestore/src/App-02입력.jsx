@@ -26,6 +26,7 @@ function App() {
 
   return (
       <div className="App">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"></link>
         <h2>Firebase - Firestore 연동 App</h2>
         <h3>입력하기</h3>
         <form onSubmit={(event) => {
