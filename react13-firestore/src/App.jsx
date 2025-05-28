@@ -1,7 +1,7 @@
-import { useState } from 'react';
 import './App.css'
 import { firestore } from './firestoreConfig';
 import { collection, doc, getDoc, getDocs, query, where } from 'firebase/firestore';
+import { useState } from 'react';
 
 function App() {
   const [showData, setShowData] = useState([]);
