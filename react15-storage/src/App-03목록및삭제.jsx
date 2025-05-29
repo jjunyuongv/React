@@ -31,8 +31,7 @@ function App() {
                     setRenderFlag(!renderFlag);
                   })
                   .catch((error) => {
-                    console.log(error);
-                    console.log("파일 삭제 실패");
+                    console.log('파일 삭제 실패' ,error);
                   });
                 }
               }}>삭제</button></td>

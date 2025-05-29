@@ -5,6 +5,7 @@ import { storage } from './storageConfig';
 
 function App() {
   const listRef = ref(storage, '');
+  const [fileLists, setFileLists] = useState([]);
 
   useEffect(() => {
     let fileRows = [];
@@ -17,7 +18,7 @@ function App() {
           console.log('파일명', itemRef.name);
 
           getDownloadURL(ref(storage, itemRef.name))
-          .thn((url)=>{
+          .then((url)=>{
             console.log('파일 URL 다운로드');
             const img = document.getElementById(`img_${itemRef.name}`);
             img.setAttribute('src', url);
@@ -41,7 +42,6 @@ function App() {
         console.log('파일 목록 출력중 에러발생', error);
       });
   }, []);
-  const [fileLists, setFileLists] = useState([]);
   console.log('렌더링');
 
   return (
